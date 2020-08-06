@@ -2884,6 +2884,13 @@ get-value@^2.0.3, get-value@^2.0.6:
   resolved "https://registry.yarnpkg.com/get-value/-/get-value-2.0.6.tgz#dc15ca1c672387ca76bd37ac0a395ba2042a2c28"
   integrity sha1-3BXKHGcjh8p2vTesCjlbogQqLCg=
 
+git-commit-msg-linter@^2.4.4:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/git-commit-msg-linter/-/git-commit-msg-linter-2.4.4.tgz#fd2b02ec60fe6035c881015c596673594461bac6"
+  integrity sha512-rlhe0EBrzRK7tWxmvz3VRNLZ32oBZhz4VHJrhaeg9mxRPhAaN01m/a8hy36Eph0isL9LhpY9r1rt0tRdP9Uu7Q==
+  dependencies:
+    chalk "^2.4.2"
+
 glob@^7.1.2, glob@^7.1.3:
   version "7.1.6"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
