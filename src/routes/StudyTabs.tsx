@@ -1,17 +1,63 @@
-import React from 'react'
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import {TeacherList} from '../pages/TeacherList'
-import {Favorites} from '../pages/Favorites'
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { TeacherList } from "../pages/TeacherList";
+import { Favorites } from "../pages/Favorites";
+import { Ionicons } from "@expo/vector-icons";
 
-const {Navigator, Screen} = createBottomTabNavigator()
+const { Navigator, Screen } = createBottomTabNavigator();
 
 function StudyTabs() {
   return (
-    <Navigator>
-      <Screen name='TeacherList' component={TeacherList} />
-      <Screen name='Favorites' component={Favorites} />
+    <Navigator
+      tabBarOptions={{
+        style: {
+          elevation: 0,
+          shadowOpacity: 0,
+          height: 64,
+        },
+        tabStyle: {
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        },
+        iconStyle: {
+          flex: 0,
+          width: 20,
+          height: 20,
+        },
+        labelStyle: {
+          fontFamily: "Archivo_700Bold",
+          fontSize: 13,
+          marginLeft: 16,
+        },
+        inactiveBackgroundColor: "#fafafc",
+        inactiveTintColor: "#c1bccc",
+        activeBackgroundColor: "#ebebf5",
+        activeTintColor: "#32264d",
+      }}
+    >
+      <Screen
+        options={{
+          tabBarLabel: "Proffys",
+          tabBarIcon: ({ color, size }) => {
+            return <Ionicons name="ios-easel" color={color} size={size} />;
+          },
+        }}
+        name="TeacherList"
+        component={TeacherList}
+      />
+      <Screen
+        options={{
+          tabBarLabel: "Favoritos",
+          tabBarIcon: ({ color, size }) => {
+            return <Ionicons name="ios-heart" color={color} size={size} />;
+          },
+        }}
+        name="Favorites"
+        component={Favorites}
+      />
     </Navigator>
-  )
+  );
 }
 
-export default StudyTabs
+export default StudyTabs;
