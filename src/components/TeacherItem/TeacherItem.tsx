@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {View, Text, Image, Linking} from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import styles from './styles'
 import {RectButton} from 'react-native-gesture-handler'
@@ -20,9 +21,36 @@ export interface Teacher {
 
 interface TeacherItemProps {
   teacher: Teacher
+  favorited: boolean;
 }
 
-const TeacherItem:React.FC<TeacherItemProps> = ({teacher}) => {
+const TeacherItem:React.FC<TeacherItemProps> = ({teacher, favorited}) => {
+
+  const [isFavorited, setIsFavorited] = useState(favorited)
+
+  async function handleToggleFavorite() {
+    const allFavorites = await AsyncStorage.getItem('@proffy:favorites')
+
+    let favoritesArray = []
+
+    if(allFavorites) {
+      favoritesArray = JSON.parse(allFavorites)
+    }
+
+    if(isFavorited) {
+      const favoriteIndex = favoritesArray.findIndex((teacherItem: Teacher) => {
+        return  teacherItem.id === teacher.id
+      })
+
+      favoritesArray.splice(favoriteIndex, 1)
+      setIsFavorited(false)
+
+    } else {
+      favoritesArray.push(teacher)
+      setIsFavorited(true)
+    }
+    await AsyncStorage.setItem('@proffy:favorites', JSON.stringify(favoritesArray)) 
+  }
 
   function  handleLinkToWhatsapp() {
     Linking.openURL(`whatsapp://ssend?phone=${teacher.whatsapp}`)
@@ -50,9 +78,17 @@ const TeacherItem:React.FC<TeacherItemProps> = ({teacher}) => {
         </Text>
 
         <View style={styles.buttonsContainer}>
-          <RectButton style={[ styles.favoriteButton, styles.favorited ]}>
-            {/* <Image source={heartOutlineIcon} /> */}
-            <Image source={unfavoriteIcon} />
+          <RectButton 
+            onPress={handleToggleFavorite}
+            style={[ 
+              styles.favoriteButton, 
+              isFavorited ? styles.favorited : {} 
+            ]}>
+            { isFavorited 
+                ? <Image source={unfavoriteIcon} /> 
+                : <Image source={heartOutlineIcon} /> 
+            }
+                       
           </RectButton>
 
           <RectButton onPress={handleLinkToWhatsapp} style={styles.contactButton}>
